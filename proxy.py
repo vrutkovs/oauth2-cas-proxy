@@ -143,7 +143,7 @@ def validate():
     """
 
     try:
-        resp = requests.get(app.config['OAUTH2_USERINFO'], params={
+        resp = requests.post(app.config['OAUTH2_USERINFO'], params={
             'access_token': request.args['ticket'],
         })
         resp.raise_for_status()
