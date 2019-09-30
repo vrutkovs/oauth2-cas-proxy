@@ -154,7 +154,7 @@ def validate():
 
         return cas_response({
             "authenticationSuccess": {
-                "user": attrs['username'],
+                "user": attrs['nickname'],
                 "proxyGrantingTicket": "FAKE-TKT-...",
                 "attributes": attrs
             }
