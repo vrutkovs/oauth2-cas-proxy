@@ -144,9 +144,9 @@ def validate():
 
     app.logger.info(request.args)
     try:
-        resp = requests.post(app.config['OAUTH2_USERINFO'], params={
-            'access_token': request.args['ticket'],
-        })
+        headers = {"Authorization": f"Bearer {request.args['ticket']}"}
+        app.logger.info(headers)
+        resp = requests.post(app.config['OAUTH2_USERINFO'], headers=headers)
         resp.raise_for_status()
 
         attrs = resp.json()
