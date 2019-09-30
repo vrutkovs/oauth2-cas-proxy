@@ -129,6 +129,9 @@ def callback():
 
     service = request.args.get('state', '')
 
+    # Callback may have double slashes
+    service = service.replace("//", "/")
+
     return redirect('%s%s%s' % (service, '&' if '?' in service else '?', args))
 
 
