@@ -3,6 +3,7 @@ import logging
 from flask import Flask, request, redirect, render_template, Markup, abort
 import requests
 import environs
+import sys
 
 env = environs.Env()
 env.read_env()
@@ -108,6 +109,8 @@ def callback():
     """
     # call OAUTH2_TOKEN, redirect with ?ticket=[access_token]
 
+    print(f'args: \n{request.args}', file=sys.stdout)
+
     resp = requests.get(app.config['OAUTH2_TOKEN'], params={
         'grant_type': 'authorization_code',
         'client_id': app.config['OAUTH2_CLIENT'],
@@ -116,11 +119,13 @@ def callback():
         'code': request.args.get('code', '')
     })
     resp.raise_for_status()
+    print(f'response: {resp.json()}', file=sys.stdout)
 
     # TODO: encrypt/sign access_token to make it unusable outside of cas proxy
     args = parse.urlencode({
         'ticket': resp.json().get('access_token'),
     })
+    print(f'args: {args}', file=sys.stdout)
 
     service = request.args.get('state', '')
 
