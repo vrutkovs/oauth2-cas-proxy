@@ -142,6 +142,7 @@ def validate():
     CAS Token validation endpoint
     """
 
+    print(request.args)
     try:
         resp = requests.post(app.config['OAUTH2_USERINFO'], params={
             'access_token': request.args['ticket'],
